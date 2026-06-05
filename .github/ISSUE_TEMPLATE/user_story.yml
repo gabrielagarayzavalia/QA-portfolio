@@ -1,0 +1,64 @@
+name: User Story (Gherkin)
+description: Agile user story aligned to a Gherkin feature and acceptance criteria
+title: "[Story] "
+labels: ["user-story", "type:story"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Map this story to a **Gherkin** file in the repo. Acceptance criteria define the **test boundary**.
+  - type: input
+    id: story_id
+    attributes:
+      label: Story ID
+      placeholder: US-API-ABM
+    validations:
+      required: true
+  - type: input
+    id: epic
+    attributes:
+      label: Parent Epic
+      description: Epic issue number or ID (e.g. EPIC-API)
+      placeholder: EPIC-API
+    validations:
+      required: true
+  - type: textarea
+    id: user_story
+    attributes:
+      label: User story (As / I want / So that)
+      value: |
+        **As** a senior QA analyst
+        **I want** to validate REST ABM and listing per OpenAPI contract
+        **So that** each SUT implementation meets acceptance criteria
+    validations:
+      required: true
+  - type: input
+    id: gherkin_file
+    attributes:
+      label: Gherkin file path
+      placeholder: projects/api-testing/gherkin/abm-crud.feature
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria (IDs)
+      description: One AC per line — tests must stay within this boundary
+      value: |
+        - [ ] AC-001: POST valid → 201 + id
+        - [ ] AC-002: POST invalid name → 400
+        - [ ] AC-003: GET list paginated → 200
+    validations:
+      required: true
+  - type: dropdown
+    id: mini_project
+    attributes:
+      label: Mini-project
+      options:
+        - api-testing
+        - performance-jmeter
+        - docker
+        - cicd-github
+        - other
+    validations:
+      required: true

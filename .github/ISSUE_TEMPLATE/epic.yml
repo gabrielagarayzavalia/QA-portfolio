@@ -1,0 +1,41 @@
+name: Epic (mini-project)
+description: High-level agile epic for a GGZenLab mini-project or skill
+title: "[Epic] "
+labels: ["epic", "type:epic"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Epic** = mini-project or skill area (e.g. API Testing, Performance, Docker lab).
+        Link child **User stories** and **QA tasks** to this epic in GitHub Projects.
+  - type: input
+    id: epic_id
+    attributes:
+      label: Epic ID
+      description: e.g. EPIC-API, EPIC-PERF, EPIC-DOCKER
+      placeholder: EPIC-API
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What this epic delivers for the portfolio
+    validations:
+      required: true
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Deliverables
+      description: Gherkin, manual cases, automation, Senior report, site page
+      value: |
+        - [ ] Gherkin feature + AC
+        - [ ] Manual test cases
+        - [ ] Automated tests
+        - [ ] Senior QA report + screenshots
+        - [ ] Bilingual docs page
+  - type: input
+    id: repo_path
+    attributes:
+      label: Repo path
+      placeholder: projects/api-testing/

@@ -16,6 +16,7 @@ Live site (EN default, bilingual): `https://gabrielagarayzavalia.github.io/QA-po
 |----|-------|------|------------------|
 | B-01 | **Docker** | Deep-dive lab: images, compose, healthchecks, troubleshooting | [Practice Labs](docs/guides/index.html) Lab 1 |
 | B-02 | **CI/CD — GitHub Actions** | Extend workflows: Newman, matrix all SUTs, badges | Lab 3 + `.github/workflows/` |
+| B-05 | **Agile PM — GitHub Projects** | Board for epics, user stories, QA tasks; traceability to Gherkin AC | [Lab 4](docs/guides/index.html) + [setup guide](projects/agile/github-projects/README.md) |
 
 ## Planned
 
@@ -23,9 +24,11 @@ Live site (EN default, bilingual): `https://gabrielagarayzavalia.github.io/QA-po
 |----|-------|------|-------------------|
 | B-03 | **CI/CD — Azure DevOps** | Mirror pipelines (build SUTs, api-tests, Pages deploy) | **Azure** free account ([azure.microsoft.com](https://azure.microsoft.com/free/)) + **Azure DevOps** org ([dev.azure.com](https://dev.azure.com)) — DevOps basic tier is free, no credit card for pipelines on public repos |
 | B-04 | **CI/CD — Jenkins** | `Jenkinsfile`, agent in Docker, same test stages | **No account** if Jenkins runs locally via `docker run jenkins/jenkins:lts`; optional CloudBees / other SaaS later |
-| B-05 | **Agile PM (Jira-like)** | Evaluate and adopt a tool to manage user stories, tasks, sprints, and QA traceability as in a real agile project | See options below |
+### B-05 — Agile PM (tool chosen: **GitHub Projects**)
 
-### B-05 — Agile PM tool options (evaluate & pick one)
+Other options considered: Jira, Trello, Azure Boards, Linear, Taiga.
+
+### B-05 — Reference: other agile PM options
 
 | Tool | Free tier | Best for GGZenLab |
 |------|-----------|-------------------|
@@ -36,7 +39,12 @@ Live site (EN default, bilingual): `https://gabrielagarayzavalia.github.io/QA-po
 | **Linear** | Free for small teams | Lightweight agile UX |
 | **Taiga** | Open source / cloud free tier | Self-host or SaaS; Scrum/Kanban |
 
-**Deliverables when started:** GGZenLab project space, backlog imported from Gherkin features, sprint with API + Performance stories, tasks for manual/automation work, screenshots for portfolio.
+**Deliverables (GitHub Projects):**
+
+- [x] Issue templates: Epic, User Story, QA Task (`.github/ISSUE_TEMPLATE/`)
+- [x] Seed issues doc: `projects/agile/github-projects/SEED_ISSUES.md`
+- [ ] Project board **GGZenLab QA Portfolio** created on GitHub
+- [ ] Epics + stories + sample tasks added; sprint simulation documented
 
 ## Account checklist
 
@@ -44,7 +52,7 @@ Live site (EN default, bilingual): `https://gabrielagarayzavalia.github.io/QA-po
 - [ ] **Azure** — sign up for free tier when starting B-03
 - [ ] **Azure DevOps** — create organization (e.g. `ggzenlab`) when starting B-03
 - [ ] **Jenkins** — install via Docker only; no signup required for B-04
-- [ ] **Agile PM (Jira-like)** — Jira free **or** **Trello** free **or** GitHub Projects (no new account) **or** Azure Boards (with B-03)
+- [x] **Agile PM — GitHub Projects** (using `gabrielagarayzavalia`; create board after push)
 
 ## Conventions per mini-project
 
@@ -63,4 +71,4 @@ Each backlog item ships with:
 2. Harden GitHub Actions (B-02) — PR gates, artifacts  
 3. Azure DevOps parallel pipeline (B-03)  
 4. Jenkins pipeline as code (B-04)  
-5. Agile PM tool (B-05) — mirror `gherkin/*.feature` and mini-projects as stories/tasks; document workflow on site
+5. **Now:** GitHub Projects (B-05) — create board, import [SEED_ISSUES.md](projects/agile/github-projects/SEED_ISSUES.md), run 1-week sprint practice

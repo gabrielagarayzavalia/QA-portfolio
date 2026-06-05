@@ -1,0 +1,72 @@
+name: QA Task
+description: Manual or automation task traceable to an AC-ID
+title: "[Task] "
+labels: ["task", "type:task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Task** = concrete work item (manual test run, automate AC, report section, screenshot).
+        Always link to **Story** and **AC-ID**.
+  - type: input
+    id: task_id
+    attributes:
+      label: Task ID
+      placeholder: TC-A-001
+    validations:
+      required: true
+  - type: input
+    id: parent_story
+    attributes:
+      label: Parent User Story
+      placeholder: US-API-ABM or issue #12
+    validations:
+      required: true
+  - type: input
+    id: ac_id
+    attributes:
+      label: AC-ID
+      placeholder: AC-001
+    validations:
+      required: true
+  - type: dropdown
+    id: task_type
+    attributes:
+      label: Task type
+      options:
+        - manual-test
+        - automation
+        - documentation
+        - report-evidence
+        - infrastructure
+    validations:
+      required: true
+  - type: dropdown
+    id: tool
+    attributes:
+      label: Tool (if applicable)
+      options:
+        - Postman
+        - Swagger
+        - Rest-Assured
+        - Playwright C#
+        - Selenium
+        - JMeter
+        - Docker
+        - GitHub Actions
+        - n/a
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps / command
+      description: How to execute this task
+    validations:
+      required: true
+  - type: checkboxes
+    id: definition_of_done
+    attributes:
+      label: Definition of Done
+      options:
+        - label: Executed and result recorded
+        - label: Linked to Senior report or screenshot
+        - label: Automated test merged (if automation task)

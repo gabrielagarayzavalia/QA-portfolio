@@ -1,0 +1,234 @@
+openapi: 3.0.3
+info:
+  title: ABM Items API
+  description: |
+    Contrato contract-first para el portfolio QA.
+    Tres implementaciones (Node, Spring, .NET) deben cumplir este contrato.
+
+    ## Acceptance Criteria de negocio (trazabilidad)
+
+    | ID | Criterio |
+    |----|----------|
+    | AC-001 | POST /api/items con payload válido retorna 201 y el ítem creado con id |
+    | AC-002 | POST con name vacío o ausente retorna 400 |
+    | AC-003 | GET /api/items retorna 200 con lista paginada (page, size) |
+    | AC-004 | GET /api/items?active=true filtra solo ítems activos |
+    | AC-005 | GET /api/items/{id} existente retorna 200 |
+    | AC-006 | GET /api/items/{id} inexistente retorna 404 |
+    | AC-007 | PUT /api/items/{id} actualiza y retorna 200 |
+    | AC-008 | PUT ítem inexistente retorna 404 |
+    | AC-009 | DELETE /api/items/{id} existente retorna 204 |
+    | AC-010 | DELETE ítem inexistente retorna 404 |
+  version: 1.0.0
+  contact:
+    name: QA Portfolio
+
+servers:
+  - url: http://localhost:3000
+    description: Node API
+  - url: http://localhost:8080
+    description: Spring API
+  - url: http://localhost:5000
+    description: .NET API
+
+tags:
+  - name: items
+    description: ABM y listado de ítems
+
+paths:
+  /api/items:
+    get:
+      tags: [items]
+      summary: Listar ítems con paginación y filtro
+      operationId: listItems
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: active
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Lista paginada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedItems'
+    post:
+      tags: [items]
+      summary: Crear ítem
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemCreate'
+      responses:
+        '201':
+          description: Ítem creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          description: Validación fallida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/items/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [items]
+      summary: Obtener ítem por id
+      operationId: getItemById
+      responses:
+        '200':
+          description: Ítem encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: No encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags: [items]
+      summary: Actualizar ítem
+      operationId: updateItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemUpdate'
+      responses:
+        '200':
+          description: Ítem actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          description: Validación fallida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: No encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags: [items]
+      summary: Eliminar ítem
+      operationId: deleteItem
+      responses:
+        '204':
+          description: Eliminado
+        '404':
+          description: No encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Item:
+      type: object
+      required: [id, name, active, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        description:
+          type: string
+          maxLength: 1000
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+    ItemCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        description:
+          type: string
+          maxLength: 1000
+        active:
+          type: boolean
+          default: true
+    ItemUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        description:
+          type: string
+          maxLength: 1000
+        active:
+          type: boolean
+    PagedItems:
+      type: object
+      required: [content, page, size, totalElements, totalPages]
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+        page:
+          type: integer
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+    ErrorResponse:
+      type: object
+      required: [message]
+      properties:
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string

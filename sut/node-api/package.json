@@ -1,0 +1,19 @@
+{
+  "name": "abm-items-node-api",
+  "version": "1.0.0",
+  "description": "SUT Node - ABM Items contract-first",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^11.0.3",
+    "yamljs": "^0.3.0"
+  }
+}

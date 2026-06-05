@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="API Testing mini-project — GGZenLab">
+  <title>API Testing | GGZenLab</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body data-i18n-title="meta.title.api" data-i18n-desc="meta.desc.home">
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="../../index.html">GG<span>ZenLab</span></a>
+      <div class="header-right">
+        <nav>
+          <a href="../../index.html" data-i18n="nav.home">Home</a>
+          <a href="index.html" class="active" data-i18n="nav.api">API Testing</a>
+          <a href="../performance/index.html" data-i18n="nav.perf">Performance</a>
+          <a href="../../guides/index.html" data-i18n="nav.guides">Practice Labs</a>
+          <a href="../../backlog/index.html" data-i18n="nav.backlog">Backlog</a>
+          <a href="https://github.com/gabrielagarayzavalia/QA-portfolio" data-repo-link data-i18n="nav.github">GitHub</a>
+        </nav>
+        <div class="lang-switcher" role="group">
+          <span data-i18n="lang.label">Language</span>
+          <button type="button" data-lang-switch="en" class="active">EN</button>
+          <button type="button" data-lang-switch="es">ES</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container content-page">
+    <h1 data-i18n="api.h1">Mini-project: API Testing (REST CRUD)</h1>
+    <p data-i18n="api.intro">Contract-first validation…</p>
+
+    <h2 data-i18n="api.tools.title">Tools demonstrated</h2>
+    <ul>
+      <li><strong>Swagger UI</strong> — <span data-i18n="guides.docker.step5">exploration / smoke</span></li>
+      <li><strong>Postman</strong> — <code>projects/api-testing/postman/</code></li>
+      <li><strong>Rest-Assured</strong> — Java, @AC-xxx</li>
+      <li><strong>Playwright C#</strong> — APIRequestContext</li>
+      <li><strong>Selenium Java</strong> — Swagger UI smoke</li>
+    </ul>
+
+    <h2 data-i18n="api.swagger.title">Swagger (local with Docker)</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>SUT</th><th>Base URL</th><th>Swagger UI</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Node</td><td>http://localhost:3000</td><td><a href="http://localhost:3000/api-docs" target="_blank" rel="noopener">/api-docs</a></td></tr>
+          <tr><td>Spring</td><td>http://localhost:8080</td><td><a href="http://localhost:8080/swagger-ui.html" target="_blank" rel="noopener">/swagger-ui.html</a></td></tr>
+          <tr><td>.NET</td><td>http://localhost:5000</td><td><a href="http://localhost:5000/swagger" target="_blank" rel="noopener">/swagger</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 data-i18n="api.docs.title">QA documentation in the repo</h2>
+    <ul>
+      <li>Gherkin: <code>projects/api-testing/gherkin/abm-crud.feature</code></li>
+      <li>Manual cases: <code>projects/api-testing/test-design/manual-test-cases.md</code></li>
+      <li>Senior report: <code>projects/api-testing/report/REPORTE-SENIOR-QA.md</code></li>
+      <li>Screenshots: <code>projects/api-testing/report/screenshots/</code></li>
+    </ul>
+
+    <div class="report-box">
+      <h3 data-i18n="api.report.title">Senior QA report summary</h3>
+      <p data-i18n="api.report.body">AC-001 to AC-010 validated…</p>
+      <p><strong data-i18n="api.report.result">Result: smoke suite in CI…</strong></p>
+    </div>
+
+    <h2 data-i18n="api.quick.title">Quick run</h2>
+    <p><a href="../../guides/index.html" data-i18n="card.guides.btn">Start practicing</a> — <span data-i18n="guides.docker.title">Lab 1 Docker</span></p>
+    <pre class="code-block">docker compose up --build
+cd projects/api-testing/tests/rest-assured-java
+mvn test -Dsut.baseUrl=http://localhost:3000</pre>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><a href="../../index.html" data-i18n="footer.back">← Back to home</a></p>
+    </div>
+  </footer>
+  <script src="../../assets/js/i18n.js"></script>
+  <script src="../../assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+name: Performance (JMeter)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 0"
+
+jobs:
+  jmeter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Start node-api
+        run: |
+          cd sut/node-api && npm install
+          OPENAPI_PATH=$GITHUB_WORKSPACE/openapi/abm-crud.yaml node src/server.js &
+          sleep 4
+
+      - name: Install JMeter
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq jmeter
+
+      - name: Run load test (reduced threads in CI)
+        working-directory: projects/performance-jmeter/jmeter
+        run: |
+          jmeter -n -t ABM-load-test.jmx \
+            -JbaseHost=localhost -JbasePort=3000 \
+            -JthreadsList=10 -JdurationList=15 -JthreadsCreate=5 \
+            -l results.jtl -e -o "$GITHUB_WORKSPACE/jmeter-report"
+
+      - name: Upload JMeter report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-html-report
+          path: jmeter-report

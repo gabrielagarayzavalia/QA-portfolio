@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Performance JMeter — GGZenLab">
+  <title>Performance JMeter | GGZenLab</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body data-i18n-title="meta.title.perf" data-i18n-desc="meta.desc.home">
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="../../index.html">GG<span>ZenLab</span></a>
+      <div class="header-right">
+        <nav>
+          <a href="../../index.html" data-i18n="nav.home">Home</a>
+          <a href="../api-testing/index.html" data-i18n="nav.api">API Testing</a>
+          <a href="index.html" class="active" data-i18n="nav.perf">Performance</a>
+          <a href="../../guides/index.html" data-i18n="nav.guides">Practice Labs</a>
+          <a href="../../backlog/index.html" data-i18n="nav.backlog">Backlog</a>
+          <a href="https://github.com/gabrielagarayzavalia/QA-portfolio" data-repo-link data-i18n="nav.github">GitHub</a>
+        </nav>
+        <div class="lang-switcher" role="group">
+          <span data-i18n="lang.label">Language</span>
+          <button type="button" data-lang-switch="en" class="active">EN</button>
+          <button type="button" data-lang-switch="es">ES</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container content-page">
+    <h1 data-i18n="perf.h1">Mini-project: Performance (JMeter)</h1>
+    <p data-i18n="perf.intro">Load tests on the ABM API…</p>
+
+    <h2 data-i18n="perf.scope.title">Scope</h2>
+    <ul>
+      <li data-i18n="perf.ac1">AC-PERF-001…</li>
+      <li data-i18n="perf.ac2">AC-PERF-002…</li>
+      <li data-i18n="perf.ac3">AC-PERF-003…</li>
+    </ul>
+
+    <h2 data-i18n="perf.artifacts.title">Artifacts</h2>
+    <ul>
+      <li>JMeter: <code>projects/performance-jmeter/jmeter/ABM-load-test.jmx</code></li>
+      <li>Gherkin: <code>projects/performance-jmeter/gherkin/performance.feature</code></li>
+      <li>Report: <code>projects/performance-jmeter/report/REPORTE-SENIOR-QA.md</code></li>
+    </ul>
+
+    <div class="report-box">
+      <h3 data-i18n="perf.cli.title">CLI execution</h3>
+      <pre class="code-block">jmeter -n -t projects/performance-jmeter/jmeter/ABM-load-test.jmx ^
+  -JbaseHost=localhost -JbasePort=3000 -l results.jtl -e -o jmeter-report</pre>
+    </div>
+
+    <h2 data-i18n="perf.prereq.title">Prerequisite</h2>
+    <p data-i18n="perf.prereq.body">Start Node SUT: docker compose up node-api</p>
+    <p><a href="../../guides/index.html" data-i18n="card.guides.btn">Start practicing</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><a href="../../index.html" data-i18n="footer.back">← Back to home</a></p>
+    </div>
+  </footer>
+  <script src="../../assets/js/i18n.js"></script>
+  <script src="../../assets/js/site.js"></script>
+</body>
+</html>

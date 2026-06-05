@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+target/
+bin/
+obj/
+.gradle/
+build/
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+*.pem
+credentials.json
+
+# Test outputs
+test-results/
+playwright-report/
+allure-results/
+*.log
+results.jtl
+jmeter.log
+jmeter-report/
+
+# .NET
+*.user
+*.suo
+project.lock.json
+
+# Java
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# OS
+Thumbs.db
+
+# Screenshots placeholder keep dir
+!projects/**/report/screenshots/.gitkeep

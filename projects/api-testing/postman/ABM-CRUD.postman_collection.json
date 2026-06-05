@@ -1,0 +1,135 @@
+{
+  "info": {
+    "_postman_id": "qa-portfolio-abm-crud",
+    "name": "ABM Items CRUD",
+    "description": "Colección contract-first alineada a AC-001..AC-010",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "itemId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "AC-001 Create Item",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Postman-AC-001\",\n  \"description\": \"Created via Postman\",\n  \"active\": true\n}"
+        },
+        "url": "{{baseUrl}}/api/items"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('AC-001 status 201', () => pm.response.to.have.status(201));",
+              "const json = pm.response.json();",
+              "pm.collectionVariables.set('itemId', json.id);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AC-002 Create Invalid",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"name\": \"\" }" },
+        "url": "{{baseUrl}}/api/items"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": ["pm.test('AC-002 status 400', () => pm.response.to.have.status(400));"],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AC-003 List Paged",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/items?page=0&size=10"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('AC-003 status 200', () => pm.response.to.have.status(200));",
+              "pm.test('has pagination', () => {",
+              "  const b = pm.response.json();",
+              "  pm.expect(b).to.have.property('content');",
+              "  pm.expect(b).to.have.property('totalElements');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AC-004 List Active Filter",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/items?active=true"
+      }
+    },
+    {
+      "name": "AC-005 Get By Id",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/items/{{itemId}}"
+      }
+    },
+    {
+      "name": "AC-006 Get Not Found",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/items/00000000-0000-0000-0000-000000000099"
+      }
+    },
+    {
+      "name": "AC-007 Update Item",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Postman-AC-007-up\",\n  \"active\": false\n}"
+        },
+        "url": "{{baseUrl}}/api/items/{{itemId}}"
+      }
+    },
+    {
+      "name": "AC-008 Update Not Found",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"name\": \"X\" }" },
+        "url": "{{baseUrl}}/api/items/00000000-0000-0000-0000-000000000099"
+      }
+    },
+    {
+      "name": "AC-009 Delete Item",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/api/items/{{itemId}}"
+      }
+    },
+    {
+      "name": "AC-010 Delete Not Found",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/api/items/00000000-0000-0000-0000-000000000099"
+      }
+    }
+  ]
+}

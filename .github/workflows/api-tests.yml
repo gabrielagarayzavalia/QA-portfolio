@@ -1,0 +1,71 @@
+name: API Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  rest-assured:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Start node-api
+        run: |
+          cd sut/node-api && npm install
+          OPENAPI_PATH=$GITHUB_WORKSPACE/openapi/abm-crud.yaml node src/server.js &
+          sleep 4
+      - name: Run Rest-Assured tests
+        working-directory: projects/api-testing/tests/rest-assured-java
+        run: mvn -q -B test -Dsut.baseUrl=http://localhost:3000
+
+  playwright-csharp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Start node-api
+        run: |
+          cd sut/node-api && npm install
+          OPENAPI_PATH=$GITHUB_WORKSPACE/openapi/abm-crud.yaml node src/server.js &
+          sleep 4
+      - name: Run Playwright API tests
+        working-directory: projects/api-testing/tests/playwright-csharp
+        env:
+          SUT_BASE_URL: http://localhost:3000
+        run: dotnet test --no-restore 2>/dev/null || (dotnet restore && dotnet test)
+
+  selenium-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Start node-api
+        run: |
+          cd sut/node-api && npm install
+          OPENAPI_PATH=$GITHUB_WORKSPACE/openapi/abm-crud.yaml node src/server.js &
+          sleep 4
+      - name: Run Selenium Swagger smoke
+        working-directory: projects/api-testing/tests/selenium-java
+        env:
+          CI: "true"
+        run: mvn -q -B test -Dsut.swaggerUiUrl=http://localhost:3000/api-docs

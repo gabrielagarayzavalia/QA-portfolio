@@ -1,0 +1,67 @@
+name: API SUTs — Build & Smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  smoke-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install & start node-api
+        working-directory: sut/node-api
+        run: |
+          npm install
+          OPENAPI_PATH=${{ github.workspace }}/openapi/abm-crud.yaml node src/server.js &
+          echo $! > /tmp/node-api.pid
+          sleep 3
+
+      - name: Smoke health & create item
+        run: |
+          curl -sf http://localhost:3000/health
+          curl -sf -X POST http://localhost:3000/api/items \
+            -H "Content-Type: application/json" \
+            -d '{"name":"CI-Smoke","active":true}' | grep -q '"id"'
+
+      - name: Stop node-api
+        if: always()
+        run: kill $(cat /tmp/node-api.pid) 2>/dev/null || true
+
+  build-spring:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Build spring-api
+        working-directory: sut/spring-api
+        run: mvn -q -B package -DskipTests
+
+  build-dotnet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Build dotnet-api
+        working-directory: sut/dotnet-api
+        run: dotnet build -c Release
+
+  docker-compose-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build images
+        run: docker compose build

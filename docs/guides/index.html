@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GGZenLab practice labs — Docker, tests, CI/CD">
+  <title>Practice Labs | GGZenLab</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-i18n-title="meta.title.guides" data-i18n-desc="meta.desc.home">
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="../index.html">GG<span>ZenLab</span></a>
+      <div class="header-right">
+        <nav>
+          <a href="../index.html" data-i18n="nav.home">Home</a>
+          <a href="../projects/api-testing/index.html" data-i18n="nav.api">API Testing</a>
+          <a href="../projects/performance/index.html" data-i18n="nav.perf">Performance</a>
+          <a href="index.html" class="active" data-i18n="nav.guides">Practice Labs</a>
+          <a href="../backlog/index.html" data-i18n="nav.backlog">Backlog</a>
+          <a href="https://github.com/gabrielagarayzavalia/QA-portfolio" data-repo-link data-i18n="nav.github">GitHub</a>
+        </nav>
+        <div class="lang-switcher" role="group">
+          <span data-i18n="lang.label">Language</span>
+          <button type="button" data-lang-switch="en" class="active">EN</button>
+          <button type="button" data-lang-switch="es">ES</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container content-page">
+    <h1 data-i18n="nav.guides">Practice Labs</h1>
+    <p data-i18n="guides.intro">Use these labs to practice everything published in the portfolio.</p>
+
+    <h2 data-i18n="guides.docker.title">Lab 1 — Docker &amp; SUTs</h2>
+    <ol class="lab-steps">
+      <li data-i18n="guides.docker.step1">Install Docker Desktop…</li>
+      <li data-i18n="guides.docker.step2">Clone the repo…</li>
+      <li data-i18n="guides.docker.step3">docker compose up --build</li>
+      <li data-i18n="guides.docker.step4">Verify health endpoints…</li>
+      <li data-i18n="guides.docker.step5">Open Swagger UIs…</li>
+    </ol>
+    <pre class="code-block">git clone https://github.com/gabrielagarayzavalia/QA-portfolio.git
+cd QA-portfolio
+docker compose up --build</pre>
+
+    <h2 data-i18n="guides.tests.title">Lab 2 — Run automated tests</h2>
+    <p data-i18n="guides.tests.ra">Rest-Assured…</p>
+    <pre class="code-block">cd projects/api-testing/tests/rest-assured-java
+mvn test -Dsut.baseUrl=http://localhost:3000</pre>
+    <p data-i18n="guides.tests.pw">Playwright C#…</p>
+    <pre class="code-block">cd projects/api-testing/tests/playwright-csharp
+set SUT_BASE_URL=http://localhost:3000
+dotnet test</pre>
+    <p data-i18n="guides.tests.sel">Selenium…</p>
+    <pre class="code-block">cd projects/api-testing/tests/selenium-java
+mvn test -Dsut.swaggerUiUrl=http://localhost:3000/api-docs</pre>
+    <p data-i18n="guides.tests.jmeter">JMeter…</p>
+    <pre class="code-block">jmeter -n -t projects/performance-jmeter/jmeter/ABM-load-test.jmx ^
+  -JbaseHost=localhost -JbasePort=3000 -l results.jtl -e -o jmeter-report</pre>
+
+    <h2 data-i18n="guides.cicd.title">Lab 3 — CI/CD (GitHub Actions)</h2>
+    <ol class="lab-steps">
+      <li data-i18n="guides.cicd.step1">Push to main…</li>
+      <li data-i18n="guides.cicd.step2">Enable Pages…</li>
+      <li data-i18n="guides.cicd.step3">Review Actions tab…</li>
+    </ol>
+
+    <h2 data-i18n="guides.accounts.title">Accounts for upcoming backlog items</h2>
+    <ul>
+      <li data-i18n="guides.accounts.gh">GitHub — gabrielagarayzavalia</li>
+      <li data-i18n="guides.accounts.azure">Azure + Azure DevOps…</li>
+      <li data-i18n="guides.accounts.jenkins">Jenkins — local Docker…</li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><a href="../index.html" data-i18n="footer.back">← Back to home</a></p>
+    </div>
+  </footer>
+  <script src="../assets/js/i18n.js"></script>
+  <script src="../assets/js/site.js"></script>
+</body>
+</html>

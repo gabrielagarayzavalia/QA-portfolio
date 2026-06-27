@@ -7,19 +7,12 @@
   <title>GGZenLab | Software QA &amp; Test Automation</title>
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body data-i18n-title="meta.title.home" data-i18n-desc="meta.desc.home">
+<body data-nav-root="" data-nav-active="home" data-i18n-title="meta.title.home" data-i18n-desc="meta.desc.home">
   <header class="site-header">
     <div class="container">
       <a class="logo" href="index.html">GG<span>ZenLab</span></a>
       <div class="header-right">
-        <nav>
-          <a href="index.html" class="active" data-i18n="nav.home">Home</a>
-          <a href="projects/api-testing/index.html" data-i18n="nav.api">API Testing</a>
-          <a href="projects/performance/index.html" data-i18n="nav.perf">Performance</a>
-          <a href="guides/index.html" data-i18n="nav.guides">Practice Labs</a>
-          <a href="backlog/index.html" data-i18n="nav.backlog">Backlog</a>
-          <a href="https://github.com/gabrielagarayzavalia/QA-portfolio" data-repo-link data-i18n="nav.github">GitHub</a>
-        </nav>
+        <nav class="site-nav" aria-label="Main"></nav>
         <div class="lang-switcher" role="group" aria-label="Language">
           <span data-i18n="lang.label">Language</span>
           <button type="button" data-lang-switch="en" class="active">EN</button>
@@ -45,7 +38,8 @@
       </div>
     </section>
 
-    <h2 class="section-title" data-i18n="section.projects">Mini-projects</h2>
+    <h2 class="section-title" data-i18n="section.qaPortfolio">QA Portfolio</h2>
+    <p data-i18n="qa.intro">Hands-on mini-projects, labs, and planned skills — contract-first QA with evidence and bilingual docs.</p>
     <div class="cards">
       <article class="card">
         <h2 data-i18n="card.api.title">API Testing — REST CRUD</h2>
@@ -71,16 +65,31 @@
         <p data-i18n="card.backlog.desc">Planned mini-projects…</p>
         <a class="btn" href="backlog/index.html" data-i18n="card.backlog.btn">View backlog</a>
       </article>
+      <article class="card">
+        <h2 data-i18n="card.tcm.title">Test Case Management</h2>
+        <p class="tools" data-i18n="card.tcm.tools">Traceability · cases · tooling</p>
+        <p data-i18n="card.tcm.desc">How test cases are designed, tracked, and linked to acceptance criteria — planned mini-project.</p>
+        <a class="btn" href="projects/test-case-management/index.html" data-i18n="card.tcm.btn">View section</a>
+      </article>
+      <article class="card">
+        <h2 data-i18n="card.automation.title">Automation</h2>
+        <p class="tools" data-i18n="card.automation.tools">Frameworks · CI · multi-stack</p>
+        <p data-i18n="card.automation.desc">Cross-project automation strategy and frameworks beyond individual mini-projects — planned.</p>
+        <a class="btn" href="projects/automation/index.html" data-i18n="card.automation.btn">View section</a>
+      </article>
     </div>
+    <p><a class="btn" href="qa-portfolio/index.html" data-i18n="nav.qaPortfolio">QA Portfolio</a></p>
 
-    <h2 class="section-title" data-i18n="section.backlog">Skills backlog (up next)</h2>
-    <ul>
-      <li data-i18n="backlog.item.docker">Docker — containerize SUTs…</li>
-      <li data-i18n="backlog.item.gh">CI/CD — GitHub Actions…</li>
-      <li data-i18n="backlog.item.azure">CI/CD — Azure DevOps Pipelines</li>
-      <li data-i18n="backlog.item.jenkins">CI/CD — Jenkins (local or cloud)</li>
-      <li data-i18n="backlog.item.agile">Agile PM — GitHub Projects for user stories, tasks &amp; sprints</li>
-    </ul>
+    <h2 class="section-title" data-i18n="section.misc">Miscellaneous</h2>
+    <p data-i18n="misc.intro">Ideas, open questions, and side notes to share — not necessarily QA-focused.</p>
+    <div class="cards">
+      <article class="card">
+        <h2 data-i18n="card.misc.title">Miscellaneous</h2>
+        <p class="tools" data-i18n="card.misc.tools">Ideas · questions · side notes</p>
+        <p data-i18n="card.misc.desc">Thoughts and open questions to share — not tied to QA deliverables or the skills backlog.</p>
+        <a class="btn" href="misc/index.html" data-i18n="card.misc.btn">Browse misc</a>
+      </article>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -91,6 +100,7 @@
       </p>
     </div>
   </footer>
+  <script src="assets/js/nav.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/site.js"></script>
 </body>

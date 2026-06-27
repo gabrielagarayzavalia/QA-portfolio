@@ -11,6 +11,10 @@
     el.textContent = GITHUB_USER + '/' + REPO_NAME;
   });
 
+  if (typeof GGZenNav !== 'undefined') {
+    GGZenNav.render();
+  }
+
   if (typeof GGZenI18n !== 'undefined') {
     GGZenI18n.initLangSwitcher();
   }

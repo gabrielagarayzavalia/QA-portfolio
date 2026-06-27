@@ -19,9 +19,19 @@ GEOJSON_FILE = PROJECT_ROOT / "data" / "provincias.geojson"
 
 COROPLETA_EXCLUDE = {"Patagonia"}
 
+CASE_COLORSCALE = [
+    [0.0, "rgb(245, 245, 245)"],
+    [0.001, "rgb(254, 224, 210)"],
+    [0.25, "rgb(252, 187, 161)"],
+    [0.5, "rgb(252, 117, 94)"],
+    [1.0, "rgb(189, 0, 38)"],
+]
+
 df = pd.read_csv(CSV_FILE)
 with open(GEOJSON_FILE, encoding="utf-8") as f:
     geojson = json.load(f)
+
+ALL_PROVINCES = sorted(f["properties"]["nombre"] for f in geojson["features"])
 
 df["provincia"] = df["provincia"].map(normalize_provincia)
 df["lat_jitter"] = pd.to_numeric(df["lat_jitter"], errors="coerce")
@@ -45,28 +55,29 @@ if "Sin fecha" in df["periodo_slider"].unique():
     periodos.append("Sin fecha")
 
 categorias = ["Todas"] + sorted(df["categoria_visual"].dropna().unique().tolist())
+provincias = ["Todas"] + sorted(df["provincia"].dropna().unique().tolist())
 
-# Vista inicial con más provincias visibles (no 1820s, que solo tiene Entre Ríos).
-INITIAL_DECADE_IDX = periodos.index("1900s") if "1900s" in periodos else 0
+INITIAL_DECADA = "1900s" if "1900s" in periodos else periodos[0]
 INITIAL_CATEGORY = "Todas"
+INITIAL_PROVINCIA = "Todas"
 INITIAL_SIDEBAR_OPEN = True
 
-# Límites fijos de Argentina (evita zoom a una sola provincia filtrada).
 GEO_LON_RANGE = [-73.5, -53.0]
 GEO_LAT_RANGE = [-55.5, -21.5]
 
 
-def _slider_marks(periodos_list: list[str]) -> dict[int, str]:
-    """Etiquetas espaciadas para evitar solapamiento en la sidebar."""
-    n = len(periodos_list)
-    if n <= 5:
-        return {i: periodos_list[i] for i in range(n)}
-    step = max(1, (n - 1) // 4)
-    indices = sorted({0, *range(step, n - 1, step), n - 1})
-    return {i: periodos_list[i] for i in indices}
+def _periodo_label(periodo: str) -> str:
+    if periodo == "Sin fecha":
+        return periodo
+    year = int(periodo[:4])
+    if year < 1900:
+        return f"Siglo XIX · {periodo}"
+    if year < 2000:
+        return f"Siglo XX · {periodo}"
+    return f"Siglo XXI · {periodo}"
 
 
-SLIDER_MARKS = _slider_marks(periodos)
+PERIODO_OPTIONS = [{"label": _periodo_label(p), "value": p} for p in periodos]
 
 app = dash.Dash(
     __name__,
@@ -81,7 +92,7 @@ sidebar_style_open = {
     "top": "0",
     "left": "0",
     "bottom": "0",
-    "width": "320px",
+    "width": "340px",
     "padding": "18px",
     "backgroundColor": "#f8f9fa",
     "borderRight": "1px solid #ddd",
@@ -91,10 +102,10 @@ sidebar_style_open = {
 }
 sidebar_style_closed = {
     **sidebar_style_open,
-    "left": "-340px",
+    "left": "-360px",
 }
 content_style_open = {
-    "marginLeft": "320px",
+    "marginLeft": "340px",
     "padding": "14px 18px",
     "transition": "all 0.35s ease",
 }
@@ -119,31 +130,41 @@ floating_button_style = {
 }
 
 
-def _filter_data(periodo: str, categoria: str) -> pd.DataFrame:
+def _filter_data(periodo: str, categoria: str, provincia: str) -> pd.DataFrame:
     d = df[df["periodo_slider"] == periodo].copy()
     if categoria != "Todas":
         d = d[d["categoria_visual"] == categoria]
+    if provincia != "Todas":
+        d = d[d["provincia"] == provincia]
     return d
 
 
-def build_figure(periodo: str, categoria: str) -> go.Figure:
-    d = _filter_data(periodo, categoria)
-    prov = (
+def _province_case_counts(d: pd.DataFrame) -> list[int]:
+    counts = (
         d[~d["provincia"].isin(COROPLETA_EXCLUDE)]
-        .groupby("provincia", as_index=False)
-        .agg(cantidad_casos=("caso", "count"))
+        .groupby("provincia")["caso"]
+        .count()
     )
+    return [int(counts.get(name, 0)) for name in ALL_PROVINCES]
+
+
+def build_figure(periodo: str, categoria: str, provincia: str) -> go.Figure:
+    d = _filter_data(periodo, categoria, provincia)
+    z_values = _province_case_counts(d)
+    zmax = max(max(z_values), 1)
 
     fig = go.Figure()
     fig.add_trace(
         go.Choropleth(
             geojson=geojson,
-            locations=prov["provincia"],
-            z=prov["cantidad_casos"] if len(prov) else [],
+            locations=ALL_PROVINCES,
+            z=z_values,
             featureidkey="properties.nombre",
-            colorscale="Reds",
-            marker_line_color="white",
-            marker_line_width=0.7,
+            colorscale=CASE_COLORSCALE,
+            zmin=0,
+            zmax=zmax,
+            marker_line_color="#3d3d3d",
+            marker_line_width=1.2,
             colorbar_title="Casos",
             hovertemplate="<b>%{location}</b><br>Casos: %{z}<extra></extra>",
             name="Casos por provincia",
@@ -158,8 +179,8 @@ def build_figure(periodo: str, categoria: str) -> go.Figure:
                 size=d["intensidad"] * 3 + 5,
                 color=d["intensidad"],
                 colorscale="Blues",
-                opacity=0.8,
-                line=dict(width=0.5, color="white"),
+                opacity=0.85,
+                line=dict(width=0.8, color="#1a1a1a"),
             ),
             text=d["caso"],
             customdata=d[
@@ -196,16 +217,23 @@ def build_figure(periodo: str, categoria: str) -> go.Figure:
     fig.update_geos(
         projection_type="mercator",
         showcountries=False,
-        showcoastlines=False,
-        showland=False,
+        showcoastlines=True,
+        coastlinecolor="#2f2f2f",
+        coastlinewidth=1.4,
+        showland=True,
+        landcolor="rgb(235, 235, 235)",
+        showocean=True,
+        oceancolor="rgb(220, 230, 240)",
         lonaxis_range=GEO_LON_RANGE,
         lataxis_range=GEO_LAT_RANGE,
+        bgcolor="rgba(0,0,0,0)",
     )
+    provincia_txt = provincia if provincia != "Todas" else "Todas las provincias"
     fig.update_layout(
         margin=dict(l=0, r=0, t=60, b=0),
         height=900,
         showlegend=False,
-        title=f"Década {periodo} — Categoría: {categoria}",
+        title=f"Década {periodo} · {categoria} · {provincia_txt}",
     )
     return fig
 
@@ -243,15 +271,19 @@ app.layout = html.Div(
                 html.H3("Filtros"),
                 html.Hr(),
                 html.Label("Década"),
-                dcc.Slider(
-                    id="decada-slider",
-                    min=0,
-                    max=len(periodos) - 1,
-                    step=1,
-                    value=INITIAL_DECADE_IDX,
-                    marks=SLIDER_MARKS,
-                    included=False,
-                    tooltip={"placement": "bottom", "always_visible": True},
+                dcc.Dropdown(
+                    id="decada-dropdown",
+                    options=PERIODO_OPTIONS,
+                    value=INITIAL_DECADA,
+                    clearable=False,
+                ),
+                html.Br(),
+                html.Label("Provincia"),
+                dcc.Dropdown(
+                    id="provincia-dropdown",
+                    options=[{"label": p, "value": p} for p in provincias],
+                    value=INITIAL_PROVINCIA,
+                    clearable=False,
                 ),
                 html.Br(),
                 html.Label("Categoría"),
@@ -289,15 +321,16 @@ app.layout = html.Div(
 @app.callback(
     Output("mapa", "figure"),
     Output("resumen-filtro", "children"),
-    Input("decada-slider", "value"),
+    Input("decada-dropdown", "value"),
     Input("categoria-dropdown", "value"),
+    Input("provincia-dropdown", "value"),
 )
-def update_map(decada_idx: int, categoria: str):
-    periodo = periodos[decada_idx]
-    fig = build_figure(periodo, categoria)
-    d = _filter_data(periodo, categoria)
+def update_map(periodo: str, categoria: str, provincia: str):
+    fig = build_figure(periodo, categoria, provincia)
+    d = _filter_data(periodo, categoria, provincia)
     resumen = [
-        html.P(f"Década seleccionada: {periodo}"),
+        html.P(f"Década: {_periodo_label(periodo)}"),
+        html.P(f"Provincia: {provincia}"),
         html.P(f"Categoría: {categoria}"),
         html.P(f"Casos visibles: {len(d)}"),
         html.P(f"Provincias con casos: {d['provincia'].nunique()}"),
@@ -321,7 +354,8 @@ def toggle_sidebar(_n_clicks, current_style):
 
 
 @app.callback(
-    Output("decada-slider", "value"),
+    Output("decada-dropdown", "value"),
+    Output("provincia-dropdown", "value"),
     Output("categoria-dropdown", "value"),
     Output("sidebar", "style", allow_duplicate=True),
     Output("content", "style", allow_duplicate=True),
@@ -331,7 +365,8 @@ def toggle_sidebar(_n_clicks, current_style):
 )
 def reset_all(_n_clicks):
     return (
-        INITIAL_DECADE_IDX,
+        INITIAL_DECADA,
+        INITIAL_PROVINCIA,
         INITIAL_CATEGORY,
         sidebar_style_open,
         content_style_open,

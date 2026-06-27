@@ -40,8 +40,11 @@ Para detener la app:
 
 ## Filtros
 
-- **Década:** bins de 1800 a 2020 (`anio_inicio`)
-- **Categoría:** `corrupcion_historica`, `condena`, `tierras_fiscales`, etc.
+- **Década:** selector por siglo (XIX / XX / XXI) y década
+- **Provincia:** todas o una provincia concreta (incluye Patagonia como región)
+- **Categoría:** tipo de caso (`corrupcion_historica`, `condena`, etc.)
+
+El mapa muestra **todas las provincias** con contorno; las que tienen casos se colorean en rojo.
 
 ## Limitaciones
 

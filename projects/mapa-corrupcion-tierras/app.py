@@ -303,9 +303,9 @@ def toggle_sidebar(_n_clicks, current_style):
 @app.callback(
     Output("decada-slider", "value"),
     Output("categoria-dropdown", "value"),
-    Output("sidebar", "style"),
-    Output("content", "style"),
-    Output("toggle-sidebar", "children"),
+    Output("sidebar", "style", allow_duplicate=True),
+    Output("content", "style", allow_duplicate=True),
+    Output("toggle-sidebar", "children", allow_duplicate=True),
     Input("reset-filters", "n_clicks"),
     prevent_initial_call=True,
 )

@@ -27,6 +27,21 @@ CASE_COLORSCALE = [
     [0.5, "rgb(252, 117, 94)"],
     [1.0, "rgb(189, 0, 38)"],
 ]
+PENDING_COLORSCALE = [[0, "rgb(192, 192, 192)"], [1, "rgb(192, 192, 192)"]]
+PENDING_HOVER = (
+    "<b>%{location}</b><br><br>"
+    "Provincia aún no investigada en este proyecto.<br>"
+    "No hay casos documentados cargados todavía.<br>"
+    "Aparece en gris hasta sumar fuentes y hechos verificables."
+    "<extra></extra>"
+)
+INVESTIGATED_HOVER = (
+    "<b>%{location}</b><br>"
+    "Casos visibles (filtros actuales): %{z}<br>"
+    "Provincia incluida en el dataset de investigación."
+    "<extra></extra>"
+)
+PROVINCE_BORDER = dict(color="rgba(90, 90, 90, 0.35)", width=0.45)
 
 df = pd.read_csv(CSV_FILE)
 with open(GEOJSON_FILE, encoding="utf-8") as f:
@@ -39,6 +54,11 @@ df["lat_jitter"] = pd.to_numeric(df["lat_jitter"], errors="coerce")
 df["lon_jitter"] = pd.to_numeric(df["lon_jitter"], errors="coerce")
 df["intensidad"] = pd.to_numeric(df["intensidad"], errors="coerce").fillna(3)
 df = df.dropna(subset=["lat_jitter", "lon_jitter"]).copy()
+
+INVESTIGATED_PROVINCES = sorted(
+    (set(df["provincia"].unique()) - COROPLETA_EXCLUDE) & set(ALL_PROVINCES)
+)
+PENDING_PROVINCES = sorted(set(ALL_PROVINCES) - set(INVESTIGATED_PROVINCES))
 
 bins = list(range(1800, 2031, 10))
 labels = [f"{y}s" for y in range(1800, 2030, 10)]
@@ -162,13 +182,14 @@ def _filter_data(periodo: str, filters: dict[str, str]) -> pd.DataFrame:
     return d
 
 
-def _province_case_counts(d: pd.DataFrame) -> list[int]:
-    counts = (
+def _case_counts_by_province(d: pd.DataFrame) -> dict[str, int]:
+    return (
         d[~d["provincia"].isin(COROPLETA_EXCLUDE)]
         .groupby("provincia")["caso"]
         .count()
+        .astype(int)
+        .to_dict()
     )
-    return [int(counts.get(name, 0)) for name in ALL_PROVINCES]
 
 
 def _hover_frame(d: pd.DataFrame) -> pd.DataFrame:
@@ -188,26 +209,45 @@ def _hover_frame(d: pd.DataFrame) -> pd.DataFrame:
 def build_figure(periodo: str, filters: dict[str, str]) -> go.Figure:
     d = _filter_data(periodo, filters)
     hover = _hover_frame(d)
-    z_values = _province_case_counts(d)
-    zmax = max(max(z_values), 1)
+    counts = _case_counts_by_province(d)
 
     fig = go.Figure()
-    fig.add_trace(
-        go.Choropleth(
-            geojson=geojson,
-            locations=ALL_PROVINCES,
-            z=z_values,
-            featureidkey="properties.nombre",
-            colorscale=CASE_COLORSCALE,
-            zmin=0,
-            zmax=zmax,
-            marker_line_color="rgba(90, 90, 90, 0.35)",
-            marker_line_width=0.45,
-            colorbar_title="Casos",
-            hovertemplate="<b>%{location}</b><br>Casos visibles: %{z}<extra></extra>",
-            name="Casos por provincia",
+
+    if PENDING_PROVINCES:
+        fig.add_trace(
+            go.Choropleth(
+                geojson=geojson,
+                locations=PENDING_PROVINCES,
+                z=[1] * len(PENDING_PROVINCES),
+                featureidkey="properties.nombre",
+                colorscale=PENDING_COLORSCALE,
+                showscale=False,
+                marker_line_color=PROVINCE_BORDER["color"],
+                marker_line_width=PROVINCE_BORDER["width"],
+                hovertemplate=PENDING_HOVER,
+                name="Pendiente de investigación",
+            )
         )
-    )
+
+    if INVESTIGATED_PROVINCES:
+        z_investigated = [int(counts.get(name, 0)) for name in INVESTIGATED_PROVINCES]
+        zmax = max(max(z_investigated), 1)
+        fig.add_trace(
+            go.Choropleth(
+                geojson=geojson,
+                locations=INVESTIGATED_PROVINCES,
+                z=z_investigated,
+                featureidkey="properties.nombre",
+                colorscale=CASE_COLORSCALE,
+                zmin=0,
+                zmax=zmax,
+                marker_line_color=PROVINCE_BORDER["color"],
+                marker_line_width=PROVINCE_BORDER["width"],
+                colorbar_title="Casos",
+                hovertemplate=INVESTIGATED_HOVER,
+                name="Casos por provincia",
+            )
+        )
 
     if len(hover):
         fig.add_trace(
@@ -405,7 +445,12 @@ def update_map(periodo: str, *filter_values: str):
     resumen = [
         html.P(f"Década: {_periodo_label(periodo)}", className="mb-1"),
         html.P(f"Casos visibles: {len(d)}", className="mb-1 fw-semibold"),
-        html.P(f"Provincias con casos: {d['provincia'].nunique()}", className="mb-2"),
+        html.P(f"Provincias con casos: {d['provincia'].nunique()}", className="mb-1"),
+        html.P(
+            f"Provincias investigadas: {len(INVESTIGATED_PROVINCES)} · "
+            f"Pendientes: {len(PENDING_PROVINCES)}",
+            className="mb-2 small text-muted",
+        ),
     ]
     if active:
         resumen.append(html.P("Filtros activos:", className="mb-1 fw-semibold"))

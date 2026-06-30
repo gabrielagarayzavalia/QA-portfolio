@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GGZenLab Portfolio — QA subsite">
+  <title>QA | GGZenLab Portfolio</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-nav-root=".." data-nav-active="qa" data-i18n-title="meta.title.qa" data-i18n-desc="meta.desc.qa">
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="../index.html">GG<span>ZenLab</span> Portfolio</a>
+      <div class="header-right">
+        <nav class="site-nav" aria-label="Main"></nav>
+        <div class="lang-switcher" role="group">
+          <span data-i18n="lang.label">Language</span>
+          <button type="button" data-lang-switch="en" class="active">EN</button>
+          <button type="button" data-lang-switch="es">ES</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container content-page">
+    <p class="breadcrumb"><a href="../index.html" data-i18n="nav.home">Home</a> · <span data-i18n="nav.qa">QA</span></p>
+    <h1 data-i18n="qa.h1">QA</h1>
+    <p data-i18n="qa.intro">Hands-on mini-projects, labs, and planned skills — contract-first QA with evidence and bilingual docs.</p>
+
+    <div class="cards">
+      <article class="card">
+        <h2 data-i18n="card.api.title">API Testing — REST CRUD</h2>
+        <p class="tools" data-i18n="card.api.tools">Swagger · Postman · …</p>
+        <p data-i18n="card.api.desc">Three implementations…</p>
+        <a class="btn" href="../projects/api-testing/index.html" data-i18n="card.api.btn">View project</a>
+      </article>
+      <article class="card">
+        <h2 data-i18n="card.perf.title">Performance — JMeter</h2>
+        <p class="tools" data-i18n="card.perf.tools">Apache JMeter…</p>
+        <p data-i18n="card.perf.desc">Load tests…</p>
+        <a class="btn" href="../projects/performance/index.html" data-i18n="card.perf.btn">View project</a>
+      </article>
+      <article class="card">
+        <h2 data-i18n="card.guides.title">Practice labs</h2>
+        <p class="tools" data-i18n="card.guides.tools">Docker · local runs…</p>
+        <p data-i18n="card.guides.desc">Follow guided instructions…</p>
+        <a class="btn" href="../guides/index.html" data-i18n="card.guides.btn">Start practicing</a>
+      </article>
+      <article class="card">
+        <h2 data-i18n="card.backlog.title">Skills backlog</h2>
+        <p class="tools" data-i18n="card.backlog.tools">Docker · GitHub Actions…</p>
+        <p data-i18n="card.backlog.desc">Planned mini-projects…</p>
+        <a class="btn" href="../backlog/index.html" data-i18n="card.backlog.btn">View backlog</a>
+      </article>
+      <article class="card">
+        <h2 data-i18n="card.tcm.title">Test Case Management</h2>
+        <p class="tools" data-i18n="card.tcm.tools">Traceability · cases · tooling</p>
+        <p data-i18n="card.tcm.desc">How test cases are designed, tracked, and linked to acceptance criteria — planned mini-project.</p>
+        <a class="btn" href="../projects/test-case-management/index.html" data-i18n="card.tcm.btn">View section</a>
+      </article>
+      <article class="card">
+        <h2 data-i18n="card.automation.title">Automation</h2>
+        <p class="tools" data-i18n="card.automation.tools">Frameworks · CI · multi-stack</p>
+        <p data-i18n="card.automation.desc">Cross-project automation strategy and frameworks beyond individual mini-projects — planned.</p>
+        <a class="btn" href="../projects/automation/index.html" data-i18n="card.automation.btn">View section</a>
+      </article>
+    </div>
+
+    <h2 class="section-title" data-i18n="section.backlog">Skills backlog (up next)</h2>
+    <ul>
+      <li data-i18n="backlog.item.docker">Docker — containerize SUTs…</li>
+      <li data-i18n="backlog.item.gh">CI/CD — GitHub Actions…</li>
+      <li data-i18n="backlog.item.azure">CI/CD — Azure DevOps Pipelines</li>
+      <li data-i18n="backlog.item.jenkins">CI/CD — Jenkins (local or cloud)</li>
+      <li data-i18n="backlog.item.agile">Agile PM — GitHub Projects for user stories, tasks &amp; sprints</li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><a href="../index.html" data-i18n="footer.back">← Back to home</a></p>
+    </div>
+  </footer>
+  <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/i18n.js"></script>
+  <script src="../assets/js/copy.js"></script>
+  <script src="../assets/js/site.js"></script>
+</body>
+</html>

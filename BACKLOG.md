@@ -1,7 +1,8 @@
-# GGZenLab — Skills Backlog
+# GGZenLab Portfolio — Skills Backlog
 
 Portfolio monorepo: [gabrielagarayzavalia/QA-portfolio](https://github.com/gabrielagarayzavalia/QA-portfolio)  
-Live site (EN default, bilingual): `https://gabrielagarayzavalia.github.io/QA-portfolio/`
+Live site (EN default, bilingual): `https://gabrielagarayzavalia.github.io/QA-portfolio/`  
+Hub con dos subsitios: **QA** (`/qa/`) y **Product Owner** (`/product-owner/`).
 
 ## Published (Done)
 
@@ -43,7 +44,7 @@ Other options considered: Jira, Trello, Azure Boards, Linear, Taiga.
 
 - [x] Issue templates: Epic, User Story, QA Task (`.github/ISSUE_TEMPLATE/`)
 - [x] Seed issues doc: `projects/agile/github-projects/SEED_ISSUES.md`
-- [ ] Project board **GGZenLab QA Portfolio** created on GitHub
+- [ ] Project board **GGZenLab Portfolio** created on GitHub
 - [ ] Epics + stories + sample tasks added; sprint simulation documented
 
 ## Account checklist

@@ -1,9 +1,15 @@
-# GGZenLab — QA Portfolio
+# GGZenLab Portfolio
 
-**Analista de Calidad de Software** e **Ingeniería en Automatización de Pruebas** — monorepo hands-on de GGZenLab, desarrollado y documentado con **asistencia de IA** (diseño, scaffolding y revisión; criterios de aceptación, pruebas y validación bajo enfoque QA).
+**GGZenLab Portfolio** — monorepo con dos tracks: **QA** (testing contract-first, labs y mini-proyectos) y **Product Owner (AI Code Assisted)** (productos y herramientas agentic construidos con asistencia de IA).
 
 **GitHub:** [gabrielagarayzavalia/QA-portfolio](https://github.com/gabrielagarayzavalia/QA-portfolio)  
 **Sitio (bilingüe EN/ES):** https://gabrielagarayzavalia.github.io/QA-portfolio/
+
+| Track | Ruta en el sitio | Contenido |
+|-------|------------------|-----------|
+| Hub | `/` | Elegí QA o Product Owner |
+| QA | `/qa/` | API Testing, Performance, Labs, Backlog |
+| Product Owner | `/product-owner/` | QA Job Hunter y futuros productos |
 
 Demuestra pruebas contract-first sobre APIs ABM (Node, Spring Boot, .NET), documentación Gherkin, casos manuales y automatizados (Postman, Rest-Assured, Playwright C#, Selenium), y performance con JMeter.
 
@@ -12,6 +18,8 @@ Demuestra pruebas contract-first sobre APIs ABM (Node, Spring Boot, .NET), docum
 El sitio estático vive en [`docs/`](docs/). Tras configurar Pages con **GitHub Actions**, la URL será:
 
 `https://gabrielagarayzavalia.github.io/QA-portfolio/` (idioma por defecto: inglés; selector EN/ES en el sitio)
+
+La ruta legacy `/qa-portfolio/` redirige a `/qa/`.
 
 ## Inicio rápido
 

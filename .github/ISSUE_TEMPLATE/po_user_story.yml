@@ -1,0 +1,77 @@
+name: User Story (Product Owner)
+description: Product user story for Job Hunter or other PO track deliverable
+title: "[Story] "
+labels: ["user-story", "type:story", "track:po"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Map to **acceptance criteria** as the test boundary. Link parent **Epic** and backlog ID (B-06…B-16).
+  - type: input
+    id: story_id
+    attributes:
+      label: Story ID
+      placeholder: US-JH-B06
+    validations:
+      required: true
+  - type: input
+    id: backlog_id
+    attributes:
+      label: Backlog ID
+      placeholder: B-06
+    validations:
+      required: true
+  - type: input
+    id: epic
+    attributes:
+      label: Parent Epic
+      placeholder: EPIC-JH
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - high
+        - high-priority
+        - medium
+        - low
+        - done
+    validations:
+      required: true
+  - type: textarea
+    id: user_story
+    attributes:
+      label: User story (As / I want / So that)
+      value: |
+        **As** a job seeker using QA Job Hunter
+        **I want** …
+        **So that** …
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Checklist — implementation and validation boundary
+      value: |
+        - [ ] AC-1: …
+        - [ ] AC-2: …
+    validations:
+      required: true
+  - type: dropdown
+    id: product
+    attributes:
+      label: Product
+      options:
+        - qa-job-hunter
+        - other-po
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Depends on
+      description: Other backlog IDs or stories
+      placeholder: B-06, US-JH-B13

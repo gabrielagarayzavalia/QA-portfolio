@@ -9,6 +9,19 @@ Tool chosen for **B-05 Agile PM**: [GitHub Projects](https://docs.github.com/en/
 | New Project | https://github.com/users/gabrielagarayzavalia/projects/new |
 | Repo Issues | https://github.com/gabrielagarayzavalia/GGZenLab-Portfolio/issues |
 | New Issue (templates) | https://github.com/gabrielagarayzavalia/GGZenLab-Portfolio/issues/new/choose |
+| QA seed issues | [SEED_ISSUES.md](SEED_ISSUES.md) — API Testing, Performance |
+| PO seed issues (Job Hunter) | [SEED_ISSUES_JOB_HUNTER.md](SEED_ISSUES_JOB_HUNTER.md) — B-06…B-16 |
+
+---
+
+## Two tracks on one board
+
+| Track | Label | Templates | Seed doc |
+|-------|-------|-----------|----------|
+| **QA** | `track:qa` | Epic, User Story (Gherkin), QA Task | [SEED_ISSUES.md](SEED_ISSUES.md) |
+| **Product Owner** | `track:po` | Epic (PO), User Story (PO), PO Task | [SEED_ISSUES_JOB_HUNTER.md](SEED_ISSUES_JOB_HUNTER.md) |
+
+Filter the project by `track:po` or `mini-project:job-hunter` for QA Job Hunter backlog.
 
 ---
 
@@ -60,7 +73,7 @@ Configure **only these** values — **no Backlog, no Ready**:
 
 1. https://github.com/users/gabrielagarayzavalia/projects/new
 2. **Template:** **Team backlog**
-3. **Name:** `GGZenLab QA Portfolio`
+3. **Name:** `GGZenLab Portfolio`
 4. **Link repo:** `gabrielagarayzavalia/GGZenLab-Portfolio`
 
 ---

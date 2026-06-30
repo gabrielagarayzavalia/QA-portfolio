@@ -1,7 +1,9 @@
 # Seed issues for GitHub Projects
 
 Create these via **Issues → New issue** (templates) after pushing the repo.  
-Then add them to project **GGZenLab QA Portfolio**.
+Then add them to project **GGZenLab Portfolio**.
+
+**Product Owner (QA Job Hunter):** see [SEED_ISSUES_JOB_HUNTER.md](SEED_ISSUES_JOB_HUNTER.md).
 
 ---
 

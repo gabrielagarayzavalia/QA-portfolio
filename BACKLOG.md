@@ -11,6 +11,23 @@ Hub con dos subsitios: **QA** (`/qa/`) y **Product Owner** (`/product-owner/`).
 | P-01 | API Testing | 3 SUTs, Gherkin, Postman, Rest-Assured, Playwright C#, Selenium, Senior report |
 | P-02 | Performance | JMeter plan, Gherkin AC-PERF, manual + CLI, report |
 
+## Product Owner — QA Job Hunter
+
+Track **Product Owner (AI Code Assisted)** · [`projects/qa-job-hunter/BACKLOG.md`](projects/qa-job-hunter/BACKLOG.md)
+
+| ID | Status | Scope |
+|----|--------|--------|
+| P-JH-01…04 | Done | Scrape, LLM match, dashboard, feedback |
+| B-06 | Planned | MongoDB persistence |
+| **B-13** | **Planned (priority)** | Multi-source jobs |
+| B-07 | Planned | Agent 3×/day |
+| B-08 | Planned | Application tracking |
+| B-14 | Planned | Web site home + /run + /dashboard |
+| B-15 | Planned | CV + cover letter |
+| B-09…B-12, B-16, B-11 | Planned | Generic app, monetization, OAuth, cloud, Web3 |
+
+Import GitHub issues from [`SEED_ISSUES_JOB_HUNTER.md`](projects/agile/github-projects/SEED_ISSUES_JOB_HUNTER.md).
+
 ## In progress
 
 | ID | Skill | Goal | Practice on site |
@@ -43,9 +60,12 @@ Other options considered: Jira, Trello, Azure Boards, Linear, Taiga.
 **Deliverables (GitHub Projects):**
 
 - [x] Issue templates: Epic, User Story, QA Task (`.github/ISSUE_TEMPLATE/`)
+- [x] Issue templates: Epic, User Story, PO Task — Product Owner track
 - [x] Seed issues doc: `projects/agile/github-projects/SEED_ISSUES.md`
+- [x] Seed issues doc (Job Hunter PO): `projects/agile/github-projects/SEED_ISSUES_JOB_HUNTER.md`
 - [ ] Project board **GGZenLab Portfolio** created on GitHub
 - [ ] Epics + stories + sample tasks added; sprint simulation documented
+- [ ] Job Hunter PO issues imported from [SEED_ISSUES_JOB_HUNTER.md](projects/agile/github-projects/SEED_ISSUES_JOB_HUNTER.md)
 
 ## Account checklist
 

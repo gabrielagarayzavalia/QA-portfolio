@@ -203,3 +203,9 @@ Para cada empleo con **70%+ de match**:
 
 *Construido con Playwright + Ollama / Claude + TypeScript*
 
+## Roadmap y GitHub Issues
+
+Backlog completo (B-06…B-16): [`BACKLOG.md`](BACKLOG.md)  
+Crear issues en GitHub: [`SEED_ISSUES_JOB_HUNTER.md`](../agile/github-projects/SEED_ISSUES_JOB_HUNTER.md)  
+Templates: **Epic (Product Owner)**, **User Story (Product Owner)**, **PO Task**
+

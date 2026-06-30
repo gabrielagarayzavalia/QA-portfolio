@@ -1,0 +1,39 @@
+name: Epic (Product Owner)
+description: High-level epic for a GGZenLab Product Owner product (AI code-assisted)
+title: "[Epic] "
+labels: ["epic", "type:epic", "track:po"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Product Owner epic** — product delivery with AI-assisted coding (Cursor, Ollama, agents).
+        Link **User stories** and **PO tasks** in GitHub Projects. Track label: `track:po`.
+  - type: input
+    id: epic_id
+    attributes:
+      label: Epic ID
+      description: e.g. EPIC-JH (QA Job Hunter)
+      placeholder: EPIC-JH
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Product goal
+      description: What this product delivers for users
+    validations:
+      required: true
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Deliverables
+      value: |
+        - [ ] User stories + acceptance criteria in GitHub Issues
+        - [ ] Runnable code in `projects/`
+        - [ ] README + docs subpage (EN/ES)
+        - [ ] Demo path (local run or dashboard)
+  - type: input
+    id: repo_path
+    attributes:
+      label: Repo path
+      placeholder: projects/qa-job-hunter/

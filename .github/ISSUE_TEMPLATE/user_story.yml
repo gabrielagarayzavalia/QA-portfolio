@@ -57,6 +57,7 @@ body:
       options:
         - api-testing
         - performance-jmeter
+        - qa-job-hunter
         - docker
         - cicd-github
         - other

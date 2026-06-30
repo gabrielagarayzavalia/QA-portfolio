@@ -3,6 +3,9 @@ contact_links:
   - name: GGZenLab Practice Labs
     url: https://gabrielagarayzavalia.github.io/GGZenLab-Portfolio/guides/
     about: Step-by-step instructions on the portfolio site
+  - name: QA Job Hunter backlog (PO track)
+    url: https://github.com/gabrielagarayzavalia/GGZenLab-Portfolio/blob/main/projects/agile/github-projects/SEED_ISSUES_JOB_HUNTER.md
+    about: Seed issues for Product Owner — QA Job Hunter (B-06 to B-16)
   - name: Gherkin features (source of truth)
     url: https://github.com/gabrielagarayzavalia/GGZenLab-Portfolio/tree/main/projects
     about: User stories and AC live next to each mini-project

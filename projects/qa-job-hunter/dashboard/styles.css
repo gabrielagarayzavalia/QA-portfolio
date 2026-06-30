@@ -29,6 +29,9 @@ body { margin: 0; min-height: 100vh; font-family: var(--font); background: var(-
 .list-header h2 { margin: 0; font-size: 0.95rem; font-weight: 600; }
 .sort-control { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-muted); }
 .sort-control select { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.35rem 0.5rem; font-size: 0.8rem; cursor: pointer; }
+.filter-control { display: flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--text-muted); cursor: pointer; }
+.filter-control input { cursor: pointer; }
+.list-header { flex-wrap: wrap; }
 .job-list { list-style: none; margin: 0; padding: 0.5rem; }
 .job-item { display: grid; grid-template-columns: auto 1fr; gap: 0.75rem; padding: 0.85rem; margin-bottom: 0.35rem; border-radius: var(--radius); cursor: pointer; border: 1px solid transparent; transition: background 0.15s, border-color 0.15s; }
 .job-item:hover { background: var(--surface-hover); }
@@ -43,6 +46,24 @@ body { margin: 0; min-height: 100vh; font-family: var(--font); background: var(-
 .job-item__title { font-weight: 600; font-size: 0.9rem; margin: 0 0 0.15rem; }
 .job-item__company { font-size: 0.8rem; color: var(--text-muted); margin: 0; }
 .job-item__meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+.job-item.rejected { opacity: 0.55; }
+.job-item.rejected .job-item__title { text-decoration: line-through; }
+.badge-rejected { display: inline-block; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: var(--danger); background: rgba(239, 68, 68, 0.15); padding: 0.1rem 0.35rem; border-radius: 4px; margin-top: 0.25rem; }
+.feedback-section { margin-top: 1.5rem; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.feedback-section h3 { margin: 0 0 0.75rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); }
+.feedback-section p { margin: 0 0 0.75rem; font-size: 0.85rem; color: var(--text-muted); }
+.feedback-reason { width: 100%; min-height: 4rem; padding: 0.6rem; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); font-family: inherit; font-size: 0.85rem; resize: vertical; margin-bottom: 0.75rem; }
+.feedback-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.btn { padding: 0.5rem 1rem; border-radius: var(--radius); font-size: 0.85rem; font-weight: 600; cursor: pointer; border: 1px solid transparent; font-family: inherit; }
+.btn--danger { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border-color: var(--danger); }
+.btn--danger:hover { background: rgba(239, 68, 68, 0.35); }
+.btn--ghost { background: transparent; color: var(--text-muted); border-color: var(--border); }
+.btn--ghost:hover { background: var(--surface-hover); color: var(--text); }
+.feedback-done { color: var(--danger); font-size: 0.9rem; margin: 0; }
+.feedback-done strong { color: #fca5a5; }
+.feedback-learn { font-size: 0.8rem; color: var(--match-high); margin-top: 0.5rem; }
+.header-feedback { color: var(--text-muted); font-size: 0.85rem; }
+.header-feedback strong { color: var(--accent); }
 .empty-state { padding: 2rem; text-align: center; color: var(--text-muted); }
 .empty-state.error { color: var(--danger); }
 .empty-state .hint { font-size: 0.85rem; margin-top: 0.5rem; }

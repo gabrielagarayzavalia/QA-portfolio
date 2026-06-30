@@ -6,6 +6,11 @@
 
 import fs from "fs";
 import { OUTPUT_PATH } from "./config.js";
+import {
+  isRejectedJobId,
+  loadFeedback,
+  matchesPriorRejection,
+} from "./feedback.js";
 import { chat, getLLMProvider, getProviderLabel, isOllamaAvailable } from "./llm-client.js";
 import { buildMatchPrompt, exportCSV, MIN_MATCH, parseMatchResponse } from "./match-utils.js";
 import type { JobListing, JobMatch, AnalysisResult } from "./types.js";
@@ -37,7 +42,13 @@ async function analyzeJobs(): Promise<void> {
   }
 
   const jobs: JobListing[] = JSON.parse(fs.readFileSync(rawPath, "utf-8"));
-  console.log(`\n🧠 Analizando ${jobs.length} empleos con ${getProviderLabel()}...\n`);
+  const feedback = loadFeedback();
+  console.log(`\n🧠 Analizando ${jobs.length} empleos con ${getProviderLabel()}...`);
+  if (feedback.rejections.length > 0) {
+    console.log(`   📚 Aprendizaje activo: ${feedback.rejections.length} match(es) incorrecto(s) previo(s)\n`);
+  } else {
+    console.log();
+  }
 
   const matchedJobs: JobMatch[] = [];
   const skippedJobs: AnalysisResult["skippedJobs"] = [];
@@ -46,6 +57,19 @@ async function analyzeJobs(): Promise<void> {
   for (let i = 0; i < jobs.length; i++) {
     const job = jobs[i];
     process.stdout.write(`   [${i + 1}/${jobs.length}] ${job.title} @ ${job.company} → `);
+
+    if (isRejectedJobId(job.id, feedback)) {
+      skippedJobs.push({ title: job.title, company: job.company, matchPercent: 0 });
+      console.log(`🚫 feedback previo (match incorrecto)`);
+      continue;
+    }
+
+    const prior = matchesPriorRejection(job, feedback);
+    if (prior) {
+      skippedJobs.push({ title: job.title, company: job.company, matchPercent: 0 });
+      console.log(`🚫 similar a rechazo previo (${prior.matchPercent}% incorrecto)`);
+      continue;
+    }
 
     try {
       const text = await chat(buildMatchPrompt(job));

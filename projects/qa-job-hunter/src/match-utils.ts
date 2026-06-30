@@ -4,18 +4,21 @@
 
 import fs from "fs";
 import { CSV_PATH, MIN_MATCH, MY_PROFILE } from "./config.js";
+import { buildFeedbackLearningBlock, loadFeedback } from "./feedback.js";
 import type { JobListing, JobMatch } from "./types.js";
 
 export { MIN_MATCH };
 
 export function buildMatchPrompt(job: JobListing): string {
+  const feedbackBlock = buildFeedbackLearningBlock(loadFeedback());
+
   return `Eres un experto senior en reclutamiento de QA y Testing con 20 años de experiencia.
 
 Analiza el match entre este perfil profesional y la oferta de empleo. Responde ÚNICAMENTE con JSON válido, sin texto extra.
 
 === PERFIL DEL CANDIDATO ===
 ${MY_PROFILE}
-
+${feedbackBlock}
 === OFERTA DE EMPLEO ===
 Título: ${job.title}
 Empresa: ${job.company}

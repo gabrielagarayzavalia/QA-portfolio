@@ -143,6 +143,7 @@ Abre `http://localhost:3847`. Lee `output/jobs-result.json`.
 
 - **Lista (derecha):** titulo, empresa, % match, orden mayor/menor
 - **Detalle (izquierda):** descripcion, skills, gaps, sugerencias CV, link LinkedIn
+- **Feedback:** marcar "Match incorrecto" por empleo → se guarda en `output/match-feedback.json` y mejora el proximo analisis
 
 Puerto: `$env:DASHBOARD_PORT = "4000"`
 

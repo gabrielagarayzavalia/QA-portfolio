@@ -2,7 +2,8 @@
 
 Product: **QA Job Hunter** · Track: **Product Owner (AI Code Assisted)**  
 Repo: [`projects/qa-job-hunter/`](.) · Site: [`/product-owner/job-hunter.html`](../../docs/product-owner/job-hunter.html)  
-GitHub Issues seed: [`SEED_ISSUES_JOB_HUNTER.md`](../agile/github-projects/SEED_ISSUES_JOB_HUNTER.md)
+GitHub Issues seed: [`SEED_ISSUES_JOB_HUNTER.md`](../agile/github-projects/SEED_ISSUES_JOB_HUNTER.md)  
+**Refined backlog:** [`BACKLOG-REFINED.md`](BACKLOG-REFINED.md) · **Sprint 1:** [`SPRINT-1-PLAN.md`](SPRINT-1-PLAN.md) · GitHub **#35–#67** (superseded #14–#15, #25–#29, #33–#34)
 
 ## Published (Done)
 

@@ -1,58 +1,78 @@
 name: PO Task
-description: Implementation, research, or infra task for Product Owner track
+description: Atomic implementation, research, or infra task for Product Owner track
 title: "[Task] "
 labels: ["task", "type:task", "track:po"]
 body:
   - type: markdown
     attributes:
       value: |
-        **PO task** — concrete dev/research/infra work. Link **Story**, **Backlog ID**, and **Epic**.
+        **PO task** — one mergeable unit, one layer. See [BACKLOG-REFINED.md](https://github.com/gabrielagarayzavalia/GGZenLab-Portfolio/blob/main/projects/qa-job-hunter/BACKLOG-REFINED.md).
   - type: input
     id: task_id
     attributes:
       label: Task ID
-      placeholder: JH-T-B06-01
-    validations:
-      required: true
-  - type: input
-    id: backlog_id
-    attributes:
-      label: Backlog ID
-      placeholder: B-06
+      placeholder: JH-T-B06-1-01
     validations:
       required: true
   - type: input
     id: parent_story
     attributes:
       label: Parent User Story
-      placeholder: US-JH-B06 or issue #42
+      placeholder: US-JH-B06-1
     validations:
       required: true
   - type: dropdown
-    id: task_type
+    id: layer
     attributes:
-      label: Task type
+      label: Layer
       options:
-        - implementation
-        - research
-        - infrastructure
-        - documentation
-        - ui-ux
-        - integration
+        - infra
+        - db
+        - api
+        - pipeline
+        - adapter
+        - ui
+        - docs
+        - qa
+    validations:
+      required: true
+  - type: input
+    id: depends_on
+    attributes:
+      label: Depends on (task IDs, comma-separated)
+      placeholder: JH-T-B06-1-01, JH-T-B06-1-02
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome (1 sentence)
+      description: Single observable result when this task is done
     validations:
       required: true
   - type: textarea
-    id: steps
+    id: scope
     attributes:
-      label: Steps / scope
-      description: What to build or investigate
+      label: Scope
     validations:
       required: true
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of scope
+  - type: textarea
+    id: verify
+    attributes:
+      label: Verify (command or manual step)
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: Files (expected paths)
   - type: checkboxes
     id: definition_of_done
     attributes:
       label: Definition of Done
       options:
         - label: Code merged or doc published
-        - label: Acceptance criteria of parent story met
-        - label: README or docs updated
+        - label: Verify step passes
+        - label: Parent story AC bullet checked

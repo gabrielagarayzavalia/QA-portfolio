@@ -13,20 +13,20 @@ Hub con dos subsitios: **QA** (`/qa/`) y **Product Owner** (`/product-owner/`).
 
 ## Product Owner — QA Job Hunter
 
-Track **Product Owner (AI Code Assisted)** · [`projects/qa-job-hunter/BACKLOG.md`](projects/qa-job-hunter/BACKLOG.md)
+Track **Product Owner (AI Code Assisted)** · [`projects/qa-job-hunter/BACKLOG.md`](projects/qa-job-hunter/BACKLOG.md) · **Refined:** [`BACKLOG-REFINED.md`](projects/qa-job-hunter/BACKLOG-REFINED.md) · GitHub **#35–#67**
 
 | ID | Status | Scope |
 |----|--------|--------|
 | P-JH-01…04 | Done | Scrape, LLM match, dashboard, feedback |
-| B-06 | Planned | MongoDB persistence |
-| **B-13** | **Planned (priority)** | Multi-source jobs |
+| B-06 | Sprint 1 (#35–#38, #43–#53, optional #65–#67) | MongoDB persistence (refined stories) |
+| **B-13** | **Sprint 1 (#39–#42, #54–#64)** | **Multi-source jobs (refined stories)** |
 | B-07 | Planned | Agent 3×/day |
 | B-08 | Planned | Application tracking |
 | B-14 | Planned | Web site home + /run + /dashboard |
 | B-15 | Planned | CV + cover letter |
 | B-09…B-12, B-16, B-11 | Planned | Generic app, monetization, OAuth, cloud, Web3 |
 
-Import GitHub issues from [`SEED_ISSUES_JOB_HUNTER.md`](projects/agile/github-projects/SEED_ISSUES_JOB_HUNTER.md).
+Import GitHub issues from [`SEED_ISSUES_JOB_HUNTER.md`](projects/agile/github-projects/SEED_ISSUES_JOB_HUNTER.md) (refined PO track **#35–#67**).
 
 ## In progress
 

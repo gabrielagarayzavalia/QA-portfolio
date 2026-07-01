@@ -1,0 +1,68 @@
+name: PO Sub-task
+description: Dependent sub-unit of a PO task (hours, single deliverable)
+title: "[Sub-task] "
+labels: ["subtask", "type:task", "track:po"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Sub-task** — child of a PO Task. Use when work depends on another task in the same story and should not be merged.
+  - type: input
+    id: task_id
+    attributes:
+      label: Sub-task ID
+      placeholder: JH-ST-B06-2-03a
+    validations:
+      required: true
+  - type: input
+    id: parent_task
+    attributes:
+      label: Parent Task ID
+      placeholder: JH-T-B06-2-03
+    validations:
+      required: true
+  - type: input
+    id: parent_story
+    attributes:
+      label: Parent User Story
+      placeholder: US-JH-B06-2
+    validations:
+      required: true
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Layer
+      options:
+        - infra
+        - db
+        - api
+        - pipeline
+        - adapter
+        - ui
+        - docs
+        - qa
+    validations:
+      required: true
+  - type: input
+    id: depends_on
+    attributes:
+      label: Depends on (task IDs)
+      placeholder: JH-T-B06-2-01
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome (1 sentence)
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+    validations:
+      required: true
+  - type: textarea
+    id: verify
+    attributes:
+      label: Verify (command or manual step)
+    validations:
+      required: true

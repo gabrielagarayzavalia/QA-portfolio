@@ -256,6 +256,14 @@ Manual fallback:
 
 En GitHub: usar **Relationships → Blocked by** en cada issue o sub-issues.
 
+**Script (idempotente):**
+
+```powershell
+powershell -File scripts/set-sprint-1-blocked-by.ps1
+```
+
+Configura #44–#67 según waves (incluye lab #65–#67). Verificar: `gh issue view 64 --json blockedBy`
+
 
 
 ---

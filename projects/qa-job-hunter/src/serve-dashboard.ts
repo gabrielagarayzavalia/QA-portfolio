@@ -14,6 +14,12 @@ import {
   removeRejection,
   type MatchFeedbackStore,
 } from "./feedback.js";
+import {
+  loadApplicationStatus,
+  setApplicationStatus,
+  type ApplicationStatus,
+  type ApplicationStatusStore,
+} from "./application-status.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -86,6 +92,7 @@ async function handleRequest(req: IncomingMessage, res: ServerResponse): Promise
     }
     const result = JSON.parse(fs.readFileSync(RESULTS_PATH, "utf-8"));
     const feedback = loadFeedback();
+    const applicationStatus = loadApplicationStatus();
     const rejectedIds = new Set(feedback.rejections.map((r) => r.jobId));
     sendJson(res, 200, {
       ...result,
@@ -93,6 +100,10 @@ async function handleRequest(req: IncomingMessage, res: ServerResponse): Promise
         rejectionCount: feedback.rejections.length,
         rejectedJobIds: [...rejectedIds],
         rejections: feedback.rejections,
+      },
+      applicationStatus: {
+        updatedAt: applicationStatus.updatedAt,
+        entries: applicationStatus.entries,
       },
     });
     return;
@@ -138,6 +149,34 @@ async function handleRequest(req: IncomingMessage, res: ServerResponse): Promise
     const jobId = decodeURIComponent(pathname.replace("/api/feedback/reject/", ""));
     const store: MatchFeedbackStore = removeRejection(jobId);
     sendJson(res, 200, store);
+    return;
+  }
+
+  if (pathname === "/api/application-status" && method === "GET") {
+    sendJson(res, 200, loadApplicationStatus());
+    return;
+  }
+
+  if (pathname === "/api/application-status" && method === "POST") {
+    try {
+      const body = JSON.parse(await readBody(req)) as {
+        jobId: string;
+        title: string;
+        company: string;
+        status: ApplicationStatus | null;
+      };
+      if (!body.jobId || !body.title) {
+        sendJson(res, 400, { error: "Faltan jobId o title" });
+        return;
+      }
+      const store = setApplicationStatus(
+        { id: body.jobId, title: body.title, company: body.company },
+        body.status
+      );
+      sendJson(res, 200, store);
+    } catch {
+      sendJson(res, 400, { error: "JSON inválido" });
+    }
     return;
   }
 
